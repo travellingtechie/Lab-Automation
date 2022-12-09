@@ -1,0 +1,14 @@
+---
+# tasks file for roles/nsxt_create_transport_zones
+- name: "Creating Transport Zone: {{ tz.display_name}}"
+  nsxt_transport_zones:
+    hostname: "{{ inventory_hostname }}.{{ dns_default_domain }}"
+    username: "{{ nsxt_admin_username }}"
+    password: "{{ nsxt_admin_password }}"
+    validate_certs: "{{ nsxt_validate_certs }}"
+    resource_type: "TransportZone"
+    display_name: "{{ tz.display_name }}"
+    description: "{{ tz.description }}"
+    transport_type: "{{ tz.transport_type }}"
+    host_switch_name: "{{ tz.transport_switch_name }}"
+    state: "present"

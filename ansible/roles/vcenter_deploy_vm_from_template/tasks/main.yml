@@ -1,0 +1,7 @@
+---
+# tasks file for vcenter_deploy_vm_from_template
+- name: Deploy VM from Template
+  include_tasks: vcenter_deploy_vm_from_template.yaml
+  loop: "{{ VMs }}"
+  loop_control:
+    loop_var: VM

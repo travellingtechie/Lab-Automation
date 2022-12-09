@@ -1,0 +1,13 @@
+---
+# tasks file for roles/nsxt_create_uplink_profiles
+- name: "Creating uplink profile {{ uplink.display_name }}"
+  nsxt_uplink_profiles:
+    hostname: "{{ inventory_hostname }}.{{ dns_default_domain }}"
+    username: "{{ nsxt_admin_username }}"
+    password: "{{ nsxt_admin_password }}"
+    validate_certs: "{{ nsxt_validate_certs }}"
+    resource_type: UplinkHostSwitchProfile
+    display_name: "{{ uplink.display_name }}"
+    teaming: "{{ uplink.teaming }}"
+    transport_vlan: "{{ uplink.transport_vlan }}"
+    state: "present"

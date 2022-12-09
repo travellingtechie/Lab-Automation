@@ -1,0 +1,20 @@
+---
+# https://docs.ansible.com/ansible/latest/collections/community/vmware/vmware_deploy_ovf_module.html
+
+- name: Deploy VM from OVA
+  community.vmware.vmware_deploy_ovf:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    validate_certs: "{{ vcenter_validate_certs }}"
+    name: "{{ VM.name }}"
+    datacenter: "{{ VM.datacenter }}"
+    # cluster: "{{ VM.cluster }}"
+    esxi_hostname: "{{ VM.esxi_hostname }}"
+    datastore: "{{ VM.datastore }}"
+    folder: "{{ VM.folder }}"
+    ##fixme this will currently only work with OVAs that have defined the template network as "VM Network"
+    networks:
+     "VM Network": "{{ VM.network}}"
+    power_on: "{{ VM.power_on}}"
+    ova: "{{files_absolute_path}}{{VM.ova}}"

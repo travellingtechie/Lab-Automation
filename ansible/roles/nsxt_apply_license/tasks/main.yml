@@ -1,0 +1,10 @@
+---
+# tasks file for roles/nsxt_apply_license
+- name: Add NSX-T License
+  nsxt_licenses:
+    hostname: "{{ inventory_hostname }}.{{ dns_default_domain }}"
+    username: "{{ nsxt_admin_username }}"
+    password: "{{ nsxt_admin_password }}"
+    validate_certs: "{{ nsxt_validate_certs }}"
+    license_key: "{{ nsxt_license }}"
+    state: "present"

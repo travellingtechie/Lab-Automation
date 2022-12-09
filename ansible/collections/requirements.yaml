@@ -1,0 +1,6 @@
+collections:
+  - name: vmware.ansible_for_nsxt
+    source: https://github.com/vmware/ansible-for-nsxt.git
+    type: git
+
+  - name: community.vmware

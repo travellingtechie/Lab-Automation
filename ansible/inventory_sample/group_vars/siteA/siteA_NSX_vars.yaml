@@ -1,0 +1,41 @@
+---
+#fixme
+
+# This is here as a sample, our NSX Manager is not in the vCenter we have access to
+# Site A CMP NSX-T Deployment Details
+nsxt_datastore: "vsanDatastore"
+nsxt_portgroup: "SiteA-Mgmt"
+nsxt_network_ip_address: "192.168.110.201"
+nsxt_network_netmask: "255.255.255.0"
+nsxt_network_gateway: "192.168.110.1"
+
+# Site A CMP vCenter Server and Cluster Details
+nsxt_compute_manager_name: "{{ site_name }} vCenter"
+nsxt_compute_manager_host: vcsa-01a.corp.local
+nsxt_transport_clusters:
+- Compute-Cluster
+
+# Transport Zone and Profile Details
+nsxt_transport_zone_name: "{{ site_name }}-overlay-transportzone"
+nsxt_transport_zone_desc: "Transport Zone for {{ site_name }}."
+nsxt_transport_node_profile_name: "{{ site_name }}-Profile"
+
+# Transport Switch vmknic IP Address Pool Details
+nsxt_transport_switch_ip_pool_name: "{{ site_name }}-Pool"
+nsxt_transport_switch_ip_pool_start: "192.168.140.101"
+nsxt_transport_switch_ip_pool_end: "192.168.140.200"
+nsxt_transport_switch_ip_pool_cidr: "192.168.140.0/24"
+# Added by me
+nsxt_transport_switch_ip_gateway: "192.168.140.1"
+
+#fixme this needs to be fixed to support the Converged vDS
+# Transport Switch Details
+nsxt_transport_switch_name: "{{ nsxt_transport_zone_name }}-Switch"
+nsxt_transport_switch_uplink_profile_name: dualUplinkProfile
+nsxt_transport_switch_uplink_profile_policy: FAILOVER_ORDER
+nsxt_transport_switch_uplink_profile_vlan: 0
+nsxt_transport_switch_profile_desc: "Transport Node Profile for {{ site_name }} Cloud Resource Cluster."
+nsxt_transport_switch_pnic_1: vmnic2
+nsxt_transport_switch_pnic_2: vmnic4
+nsxt_transport_switch_uplink_1: uplink-1
+nsxt_transport_switch_uplink_2: uplink-2

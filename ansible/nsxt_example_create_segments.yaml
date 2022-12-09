@@ -1,0 +1,17 @@
+---
+## Deploys an NSX-T environment
+- hosts: nsxt_managers
+  connection: local
+  become: yes
+  gather_facts: False
+  vars:
+    segments:
+    - name: "Ansible-Test"
+      transportzone: "nsx-overlay-transportzone"
+      ipaddress: "172.16.10.1"
+      gateway_address: "172.16.10.1/24"
+
+  roles:
+    - nsxt_create_segments
+
+

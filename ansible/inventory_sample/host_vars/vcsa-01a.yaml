@@ -1,0 +1,4 @@
+# vCenter Login
+vcenter_hostname: nsxapp-01a.corp.local
+vcenter_username: admin
+vcenter_password: VMware1!VMware1!

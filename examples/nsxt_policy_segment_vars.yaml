@@ -1,0 +1,4 @@
+segment_name: "Ansible-Test"
+segment_transportzone: "nsx-overlay-transportzone"
+segment_ipaddress: "172.16.10.1"
+segment_gateway_address: "172.16.10.1/24"

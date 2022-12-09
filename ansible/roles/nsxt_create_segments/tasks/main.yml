@@ -1,0 +1,7 @@
+---
+# tasks file for roles/nsxt_create_segments
+- name: Create Segments
+  include_tasks: create_segments.yaml
+  loop: "{{ segments }}"
+  loop_control:
+    loop_var: segment

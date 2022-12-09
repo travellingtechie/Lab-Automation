@@ -1,0 +1,8 @@
+---
+## Deploys an NSX-T environment
+- hosts: nsxt_managers
+  connection: local
+  become: yes
+  gather_facts: False 
+  roles:
+    - nsxt_apply_license

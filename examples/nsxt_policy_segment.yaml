@@ -1,0 +1,63 @@
+# Copyright 2018 VMware, Inc.
+# SPDX-License-Identifier: BSD-2-Clause OR GPL-3.0-only
+---
+#
+# Playbook to test Segment
+#
+- hosts: nsx
+  vars_files:
+  - nsxt_policy_segment_vars.yaml
+  tasks:
+    - name: Update Segment
+      vmware.ansible_for_nsxt.nsxt_policy_segment:
+        hostname: "{{nsx_hostname}}"
+        username: "{{nsx_username}}"
+        password: "{{nsx_password}}"
+        validate_certs: False
+        state: present
+        display_name: "{{segment_name}}"
+        domain_name: "default"
+        transport_zone_display_name: "nsx-overlay-transportzone"
+        replication_mode: "SOURCE"
+#        advanced_config:
+#          address_pool_display_name: small-2-pool
+#          connectivity: "OFF"
+#          hybrid: False
+#          local_egress: True
+        admin_state: UP
+#        connectivity_path: "/infra/tier-1s/d082bc25-a9b2-4d13-afe5-d3cecad4b854"
+#        subnets:
+#          - gateway_address: "{{segment_gateway_address}}"
+          # - dhcp_config:
+          #     # IPv4 example
+          #     options:
+          #       option121:
+          #         static_routes:
+          #           - network: "10.22.12.2/23"
+          #             next_hop: "10.10.10.10"
+          #     resource_type: SegmentDhcpV4Config
+          #     lease_time: 16400
+          #   gateway_address: "192.40.10.1/24"
+          #     # IPv6 Example
+          #     resource_type: SegmentDhcpV6Config
+          #     preferred_time: 2048
+          #     excluded_ranges:
+          #       - fc7e::1-fc7e::32
+          #     server_address: "fc7e:f206:db42::2/48"
+          #   gateway_address: "fc7e:f206:db42::1/48"
+#        segment_ports:
+#          - display_name: test-sp-1
+#            state: present
+#            tags:
+#              - scope: "scope-1"
+#                tag: "tag-2"
+#            extra_configs:
+#              - config_pair:
+#                  key: key
+#                  value: value
+#            ignored_address_bindings:
+#              - ip_address: "10.1.2.122"
+#          - display_name: test-sp-2
+#            state: present
+#          - display_name: test-sp-3
+#            state: present

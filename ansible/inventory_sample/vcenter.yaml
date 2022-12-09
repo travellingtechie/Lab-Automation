@@ -1,0 +1,6 @@
+# Using aliases to local host for my inventory objects so I can attach variables to them
+vcenter:
+  hosts:
+    vcsa-01a:
+      ansible_host: 127.0.0.1
+      ansible_connection: local

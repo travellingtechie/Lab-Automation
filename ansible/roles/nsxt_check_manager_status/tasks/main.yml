@@ -1,0 +1,9 @@
+---
+# tasks file for nsxt_check_manager_status
+- name: Check NSX-T Manager Status
+  nsxt_manager_status:
+    hostname: "{{ inventory_hostname }}.{{ dns_default_domain }}"
+    username: "{{ nsxt_admin_username }}"
+    password: "{{ nsxt_admin_password }}"
+    validate_certs: "{{ nsxt_validate_certs }}"
+    wait_time: "{{ nsxt_status_check_delay }}"

@@ -1,0 +1,31 @@
+---
+# tasks file for nsxt_deploy_ova
+- name: deploy NSX-T Manager OVA
+  nsxt_deploy_ova:
+    ovftool_path: "{{ nsxt_ovftool_path }}"
+    datacenter: "{{ nsxt_deployment_datacenter }}"
+    datastore: "{{ nsxt_deployment_datastore }}"
+    portgroup: "{{ nsxt_deployment_portgroup }}"
+    cluster: "{{ nsxt_deployment_cluster }}"
+    vmname: "{{ inventory_hostname |upper }}"
+    hostname: "{{ inventory_hostname }}"
+    dns_server: "{{ dns_server_1 }}"
+    dns_domain: "{{ dns_default_domain }}"
+    ntp_server: "{{ ntp_server_default }}"
+    gateway: "{{ nsxt_network_gateway }}"
+    ip_address: "{{ nsxt_network_ip_address }}"
+    netmask: "{{ nsxt_network_netmask }}"
+    admin_password: "{{ nsxt_admin_password }}"
+    cli_password: "{{ nsxt_cli_password }}"
+    path_to_ova: "{{ nsxt_ova_path }}"
+    ova_file: "{{ nsxt_ova_filename }}"
+    vcenter: "{{ nsxt_deployment_vcenter }}"
+    vcenter_user: "{{ mgmt_vcenter_admin_username }}"
+    vcenter_passwd: "{{ mgmt_vcenter_admin_password }}"
+    deployment_size: "{{ nsxt_deployment_size }}"
+    ssh_enabled: "{{ nsxt_ssh_enabled }}"
+    role: "{{ nsxt_role }}"
+
+- name: Check NSX-T Manager Status
+  include_role:
+    name: nsxt_check_manager_status

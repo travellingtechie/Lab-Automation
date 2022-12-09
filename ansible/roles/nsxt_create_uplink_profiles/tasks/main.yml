@@ -1,0 +1,7 @@
+---
+# tasks file for roles/nsxt_create_uplink_profiles
+- name: Create NSX-T Uplink Profiles
+  include: create_uplink_profile.yml
+  loop: "{{ uplink_profiles }}"
+  loop_control:
+    loop_var: uplink

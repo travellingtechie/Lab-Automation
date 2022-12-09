@@ -1,0 +1,4 @@
+siteA:
+  hosts:
+    vcsa-01a:
+    nsxapp-01a:

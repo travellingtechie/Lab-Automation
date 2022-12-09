@@ -1,0 +1,10 @@
+## Preps Ubuntu System for ansible
+## Generally this should be done as part of building a template
+## todo I'd like to configure this to ask for the required information instead of editing vars in the role
+
+- hosts: ubuntu
+  become: true
+  gather_facts: False
+
+  roles:
+    - ubuntu_system_prep

@@ -1,0 +1,17 @@
+---
+    - name: Create VM from Template
+      vmware_guest:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: False
+        name: "{{ VM.name }}"
+        template: "{{ VM.template_name }}"
+        datacenter: "{{ VM.datacenter }}"
+        folder: "/{{ VM.datacenter }}/vm/{{ VM.folder }}"
+        state: "{{ VM.state }}"
+        esxi_hostname: "{{ VM.esxi_hostname}}"
+        # cluster: "{{ VM.cluster }}"
+        customization_spec: "{{VM.customization_spec}}"
+        networks: "{{ VM.networks }}"
+        wait_for_ip_address: yes

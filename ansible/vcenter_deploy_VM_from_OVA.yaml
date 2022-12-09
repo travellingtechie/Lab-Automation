@@ -1,0 +1,21 @@
+---
+## Deploys VMs from OVA
+- hosts: galactica
+  connection: local
+  gather_facts: True
+  vars:
+    VMs:
+    - name: "Ubuntu-02"
+      datacenter: "Homelab"
+      #This should be an either/or with Cluster_name
+      esxi_hostname: "rama11.lab.travellingtechie.com"
+      datastore: "Lab NFS"
+      folder: "/Homelab/vm/ansible"
+      network: "Lab MGMT"
+      power_on: "yes"
+      ova: "Ubuntu-Minimal.ova"
+
+
+
+  roles:
+    - vcenter_deploy_vm_from_OVA

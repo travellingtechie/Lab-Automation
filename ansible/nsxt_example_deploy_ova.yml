@@ -1,0 +1,18 @@
+---
+## Deploys an NSX-T environment
+- hosts: nsxt_managers
+  connection: local
+  become: yes
+  gather_facts: False
+  vars:
+    nsxt_deployment_vcenter: "{{ mgmt_vcenter_server }}"
+    nsxt_deployment_vcenter_username: "{{ mgmt_vcenter_admin_username }}"
+    nsxt_deployment_vcenter_password: "{{ mgmt_vcenter_admin_password }}"
+    nsxt_deployment_datacenter: "{{ mgmt_vcenter_datacenter }}"
+    nsxt_deployment_cluster: "{{ mgmt_vcenter_cluster }}"
+    nsxt_deployment_datastore: "{{ nsxt_datastore }}"
+    nsxt_deployment_portgroup: "{{ nsxt_portgroup }}"
+    nsxt_deployment_size: "{{ nsxt_default_deployment_size }}"
+    nsxt_role: "{{ nsxt_default_role }}"  
+  roles:
+    - nsxt_deploy_ova

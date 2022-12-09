@@ -1,0 +1,18 @@
+---
+- name: Test ansible
+  hosts: nsx
+  vars_files:
+  - nsxt_policy_segment_vars.yaml
+  tasks:
+    - name: Display hostname
+      debug:
+        msg: "the hostname is {{nsx_hostname}}"
+    - name: Display segment
+      debug:
+        msg: "the segment is: {{segment_name}}"
+    - name: List Hostswitch Profiles
+      vmware.ansible_for_nsxt.nsxt_uplink_profiles_facts:
+        hostname: "{{nsx_hostname}}"
+        username: "{{nsx_username}}"
+        password: "{{nsx_password}}"
+        validate_certs: False

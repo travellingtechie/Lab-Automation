@@ -1,0 +1,13 @@
+---
+## Deploys an NSX-T environment
+- hosts: nsxt_managers
+  connection: local
+  become: yes
+  gather_facts: False
+  vars:
+    compute_managers:
+    - name: "{{ nsxt_compute_manager_name }}"
+      host: "{{ nsxt_compute_manager_host }}"
+      transport_clusters: "{{ nsxt_transport_clusters }}"
+  roles:
+    - nsxt_add_compute_managers

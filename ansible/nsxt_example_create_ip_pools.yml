@@ -1,0 +1,16 @@
+---
+## Deploys an NSX-T environment
+- hosts: nsxt_managers
+  connection: local
+  become: yes
+  gather_facts: False
+  vars:
+    ip_pools:
+    - display_name: "{{ nsxt_transport_switch_ip_pool_name }}"
+      subnets:
+      - allocation_ranges:
+        - start: "{{ nsxt_transport_switch_ip_pool_start }}"
+          end: "{{ nsxt_transport_switch_ip_pool_end }}"
+        cidr: "{{ nsxt_transport_switch_ip_pool_cidr }}"
+  roles:
+    - nsxt_create_ip_pools

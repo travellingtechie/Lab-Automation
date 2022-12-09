@@ -1,0 +1,7 @@
+---
+# tasks file for roles/nsxt_create_transport_zones
+- name: Create NSX-T Transport Zones
+  include: create_transport_zone.yml
+  loop: "{{ transport_zones }}"
+  loop_control:
+    loop_var: tz

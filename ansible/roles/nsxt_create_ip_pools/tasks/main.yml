@@ -1,0 +1,7 @@
+---
+# tasks file for roles/nsxt_create_ip_pools
+- name: Create NSX-T IP Pools
+  include: create_ip_pool.yml
+  loop: "{{ ip_pools }}"
+  loop_control:
+    loop_var: ippool

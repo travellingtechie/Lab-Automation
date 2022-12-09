@@ -1,0 +1,16 @@
+#cloud-config
+users:
+  - name: brandonne
+    hashed_passwd: $6$CA.hkZXk3E.qZpo$OvZ9MJLlW/T2hWmlmiWn7PB2mBbcm7.4OhlqItTmJIg.8sBRyiCEOJYphon0pY3UeOY10IbQXzsppsNhA8OTh1
+    ssh-authorized-keys:
+     - ssh-rsa ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBACProiC2JxSHwf6LKi1Owq/3ulXIMTY+J6QqAxYHSbbA44KUWw8k80AZfS7rZ+NFDbbBZtaDRSEqawhGaLoQ01/NAF/kOucLARwqQxJ/ecDQrMHbLGIf9BW4fgSm3BG11cBDRVi3pGPG4oSuKTQJOZeLmvPWlqJfgQK+zE9UUWYMary/w==
+#  sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: sudo
+    shell: /bin/bash
+packages:
+  - jq
+  - docker
+  - docker.io
+runcmd:
+    - mkdir -p /mnt/sharedfolder
+    - cp /usr/share/doc/util-linux/examples/securetty /etc/securetty

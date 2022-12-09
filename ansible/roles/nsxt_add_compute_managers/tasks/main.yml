@@ -1,0 +1,7 @@
+---
+# tasks file for roles/nsxt_add_compute_managers
+- name: Add NSX-T Compute Managers
+  include: add_compute_manager.yml
+  loop: "{{ compute_managers }}"
+  loop_control:
+    loop_var: cm

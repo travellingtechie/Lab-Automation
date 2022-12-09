@@ -1,0 +1,12 @@
+---
+## Installs Ubuntu Packages
+## For now I'm listing the packages in here, eventually I want it to be in host vars
+- hosts: ubuntu
+  become: true
+  gather_facts: False
+  vars:
+    packages:
+    - vim
+    - docker
+  roles:
+    - ubuntu_install_package

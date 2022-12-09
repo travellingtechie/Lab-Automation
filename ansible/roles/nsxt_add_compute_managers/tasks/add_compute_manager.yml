@@ -1,0 +1,16 @@
+---
+# tasks file for roles/nsxt_add_compute_managers
+- name: "Add Compute Manager: {{ cm.name }}"
+  nsxt_fabric_compute_managers:
+    hostname: "{{ inventory_hostname }}.{{ dns_default_domain }}"
+    username: "{{ nsxt_admin_username }}"
+    password: "{{ nsxt_admin_password }}"
+    validate_certs: "{{ nsxt_validate_certs }}"
+    display_name: "{{ cm.name }}"
+    server: "{{ cm.host }}"
+    origin_type: "{{ nsxt_default_origin_type }}"
+    credential:
+      credential_type: UsernamePasswordLoginCredential
+      username: "{{ nsxt_cm_username }}"
+      password: "{{ nsxt_cm_password }}"
+    state: present

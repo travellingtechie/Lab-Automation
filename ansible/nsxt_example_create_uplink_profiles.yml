@@ -1,0 +1,19 @@
+---
+## Deploys an NSX-T environment
+- hosts: nsxt_managers
+  connection: local
+  become: yes
+  gather_facts: False
+  vars:
+    uplink_profiles:
+    - display_name: "{{ nsxt_transport_switch_uplink_profile_name }}"
+      teaming:
+        active_list:
+        - uplink_name: "{{ nsxt_transport_switch_uplink_1 }}"
+          uplink_type: PNIC
+        - uplink_name: "{{ nsxt_transport_switch_uplink_2 }}"
+          uplink_type: PNIC
+        policy: "{{ nsxt_transport_switch_uplink_profile_policy }}"
+      transport_vlan: "{{ nsxt_transport_switch_uplink_profile_vlan }}"
+  roles:
+    - nsxt_create_uplink_profiles

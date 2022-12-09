@@ -1,0 +1,7 @@
+---
+# tasks file for roles/nsxt_create_transport_profiles
+- name: Create NSX-T Transport Node Profiles
+  include: create_transport_node_profile.yml
+  loop: "{{ transport_node_profiles }}"
+  loop_control:
+    loop_var: tnp

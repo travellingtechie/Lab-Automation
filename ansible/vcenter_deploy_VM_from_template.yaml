@@ -1,0 +1,23 @@
+---
+## Deploys VMs from Templates
+- hosts: galactica
+  connection: local
+  gather_facts: False
+  vars:
+    VMs:
+    - name: "Ubuntu-01"
+      template_name: "Ubuntu-Minimal-Template"
+      datacenter: "Homelab"
+      datastore: "Lab_NFS"
+      folder: "ansible"
+      state: "powered-on"
+      #This should be an either/or with Cluster_name
+      esxi_hostname: "rama11.lab.travellingtechie.com"
+      customization_spec: "Ubuntu"
+      networks:
+      - name: "Lab MGMT"
+
+
+
+  roles:
+    - vcenter_deploy_VM_from_template

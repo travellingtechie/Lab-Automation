@@ -1,0 +1,14 @@
+---
+## Deploys an NSX-T environment
+- hosts: nsxt_managers
+  connection: local
+  become: yes
+  gather_facts: False
+  vars:
+    transport_zones:
+    - display_name: "{{ nsxt_transport_zone_name }}"
+      description: "{{ nsxt_transport_zone_desc }}"
+      transport_type: "OVERLAY"
+      transport_switch_name: "{{ nsxt_transport_switch_name }}"
+  roles:
+    - nsxt_create_transport_zones

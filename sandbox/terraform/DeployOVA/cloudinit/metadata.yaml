@@ -1,0 +1,19 @@
+local-hostname: ubuntu01
+instance-id: ubuntu01
+network:
+  version: 2
+  ethernets:
+    ens192:
+      dhcp4: false #true to use dhcp
+      addresses:
+        - 10.1.60.15/24
+      gateway4: 10.1.60.1
+      nameservers:
+        addresses:
+          - 10.1.10.5
+wait-on-network:
+  ipv4: true
+# Cleapup files that may contain sensitive data
+#cleanup-guestinfo:
+#- userdata
+#- vendordata

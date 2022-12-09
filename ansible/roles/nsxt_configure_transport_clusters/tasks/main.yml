@@ -1,0 +1,7 @@
+---
+# tasks file for roles/nsxt_configure_transport_clusters
+- name: Configure NSX-T Transport Clusters
+  include: configure_transport_cluster.yml
+  loop: "{{ compute_managers }}"
+  loop_control:
+    loop_var: cm
