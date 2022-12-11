@@ -1,0 +1,8 @@
+- name: Add a new vCenter license
+  community.vmware.vcenter_license:
+    hostname: '{{ vcenter_hostname }}'
+    username: '{{ vcenter_username }}'
+    password: '{{ vcenter_password }}'
+    license: "{{ vcenter_license_key}}"
+    state: present
+  delegate_to: localhost

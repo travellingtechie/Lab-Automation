@@ -1,0 +1,17 @@
+---
+# tasks file for vcenter_add_license_keys
+- name: Add vCenter license
+  include_tasks: add_vcenter_license.yaml
+  loop: "{{ segments }}"
+  loop_control:
+    loop_var: segment
+
+- name: Add ESXi_hosts_license.yaml
+  include_tasks: add_esxi_host_license.yaml
+  loop: "{{ esxi_license }}"
+  loop_control:
+    loop_var: esxi_license
+
+
+
+# Eventually add vSAN license too
