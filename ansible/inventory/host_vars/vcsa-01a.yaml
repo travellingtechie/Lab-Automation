@@ -1,0 +1,7 @@
+# vCenter Login
+vcenter_hostname: vcsa-01a.corp.local
+vcenter_username: admin
+vcenter_password: VMware1!VMware1!
+
+# VCSA License
+vcenter_license: XXXX-XXXX-XXXX-XXXX
