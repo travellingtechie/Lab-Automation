@@ -70,3 +70,7 @@ terraform.rc
 # Ansible
 *.retry
 .vault_pass
+
+# ignore my inventory directory
+inventory/
+
