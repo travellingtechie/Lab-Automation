@@ -12,4 +12,3 @@ host *
  UserKnownHostsFile /dev/null
  StrictHostKeyChecking no
  IdentityFile ~/.ssh/ansible
- IdentityFile ~/.ssh/id_rsa
