@@ -20,10 +20,11 @@
   containers.podman.podman_image:
     name: portainer/portainer-ce
 
+# Make sure we have
 - name: Deploy Portainer-CE pod
   containers.podman.podman_container:
     name: portainer-ce
-    image: portainer/portainer-ce
+    image: docker.io/portainer/portainer-ce
     ports:
       - "9443:9443"
     privileged: true
