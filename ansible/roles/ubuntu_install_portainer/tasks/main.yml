@@ -10,7 +10,7 @@
     update_cache: true
     cache_valid_time: 3600
 
-
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_module.html
 - name: Enable podman.socket
   ansible.builtin.systemd:
     name: podman.socket
@@ -20,11 +20,13 @@
   containers.podman.podman_image:
     name: portainer/portainer-ce
 
-# Make sure we have
+# Deploy Portainer Pod
+# https://docs.ansible.com/ansible/latest/collections/containers/podman/index.html
 - name: Deploy Portainer-CE pod
   containers.podman.podman_container:
     name: portainer-ce
     image: docker.io/portainer/portainer-ce
+    command: "--admin-password {{ admin_password_hash }}"
     ports:
       - "9443:9443"
     privileged: true
