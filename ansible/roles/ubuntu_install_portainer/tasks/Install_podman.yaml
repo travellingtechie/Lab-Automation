@@ -1,0 +1,10 @@
+---
+## Installs Ubuntu Packages necessary for portainer
+- hosts: ubuntu
+  become: true
+  gather_facts: False
+  vars:
+    packages:
+      - podman
+  roles:
+    - ubuntu_install_package

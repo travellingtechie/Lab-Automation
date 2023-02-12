@@ -1,10 +1,9 @@
 ---
 ## Installs Ubuntu Packages
 ## packages are listed in group_vars as "group_packages"
-- hosts: ubuntu
+- hosts: controlcenter
   become: true
   gather_facts: False
   vars:
-    packages: "{{ group_packages }}"
   roles:
-    - ubuntu_install_package
+    - ubuntu_install_portainer

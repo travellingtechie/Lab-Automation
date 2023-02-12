@@ -1,6 +1,6 @@
 ---
 ## Installs Ubuntu Packages
-## packages are listed in hostvars as "packages"
+## packages are listed in host_vars as "host_packages"
 - hosts: ubuntu
   become: true
   gather_facts: False
