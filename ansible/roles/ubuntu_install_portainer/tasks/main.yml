@@ -7,7 +7,7 @@
   apt:
     name: "{{ packages }}"
     state: present
-    update_cache: yes
+    update_cache: true
     cache_valid_time: 3600
 
 
@@ -16,3 +16,13 @@
     name: podman.socket
     enabled: true
 
+- name: Deploy Portainer-CE pod
+  containers.podman.podman_container:
+    name: portainer-ce
+    image: portainer/portainer-ce
+    ports:
+      - "9443:9443"
+    privileged: true
+    volume: "/run/podman/podman.sock:/var/run/docker.sock:Z"
+    # volume: portainer_data:/data (need to crate portainer_data first)
+    state: started
