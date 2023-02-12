@@ -7,7 +7,4 @@
       - podman
   roles:
     - ubuntu_install_package
-- name: Start Podman socket
-  ansible.builtin.systemd:
-    name: podman.socket
-    enabled: yes
+
