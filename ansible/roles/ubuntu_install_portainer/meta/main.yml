@@ -29,7 +29,7 @@ galaxy_info:
   #
   platforms:
     - name: Ubuntu
-     versions: 22.04
+    - versions: 22.04
   #   - all
   #   - 25
   # - name: SomePlatform
