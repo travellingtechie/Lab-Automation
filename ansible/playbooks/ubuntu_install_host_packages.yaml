@@ -5,7 +5,6 @@
   become: true
   gather_facts: False
   vars:
-    packages:
-      - "{{host_packages + group_packages}}"
+    packages: "{{ host_packages }}"
   roles:
     - ubuntu_install_package

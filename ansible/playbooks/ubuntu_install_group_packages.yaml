@@ -1,0 +1,10 @@
+---
+## Installs Ubuntu Packages
+## packages are listed in hostvars as "packages"
+- hosts: ubuntu
+  become: true
+  gather_facts: False
+  vars:
+    packages: "{{ group_packages }}"
+  roles:
+    - ubuntu_install_package
