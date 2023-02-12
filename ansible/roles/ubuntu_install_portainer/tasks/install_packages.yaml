@@ -1,9 +1,1 @@
 ---
-## Installs Ubuntu Packages necessary for portainer
-# https://docs.ansible.com/ansible/2.9/modules/apt_module.html
-- name: Install Ubuntu Packages
-  apt:
-    name: "{{ packages }}"
-    state: present
-    update_cache: yes
-    cache_valid_time: 3600
