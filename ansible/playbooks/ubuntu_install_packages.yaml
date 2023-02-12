@@ -9,4 +9,3 @@
       - "{{host_packages + group_packages}}"
   roles:
     - ubuntu_install_package
-    -
