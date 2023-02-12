@@ -1,5 +1,0 @@
----
-# vars file for ubuntu_system_prep
-host_ansible_username: "mike"
-host_ansible_password: "$6$m2IME65Cb$qc.aSnzmlt1GdSnyDqj2/2gS9lsa/S1BHlnAE57m7BXxCDYvIzGqLgXWHcvYYMd4vnlAi9MQ3P344LG3ZiWMn1"
-host_ansible_authorized_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJM0lxr16Ek2gARwSaCLggqn4ACNq1Fnldn6kKyhIRPp ansible"
