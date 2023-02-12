@@ -1,3 +1,0 @@
--name: Install Ubuntu Packages
- apt:
-   name: {{vim}}

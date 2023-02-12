@@ -1,10 +1,3 @@
 ---
 # tasks file for ubuntu_install_portainer
-- name: install podman
-  become: true
-  vars:
-    packages:
-      - podman
-  roles:
-    - ubuntu_install_package
-
+- include_tasks: install_packages.yaml
