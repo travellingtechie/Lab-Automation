@@ -16,6 +16,10 @@
     name: podman.socket
     enabled: true
 
+- name: Pull an image
+  containers.podman.podman_image:
+    name: portainer/portainer-ce
+
 - name: Deploy Portainer-CE pod
   containers.podman.podman_container:
     name: portainer-ce
