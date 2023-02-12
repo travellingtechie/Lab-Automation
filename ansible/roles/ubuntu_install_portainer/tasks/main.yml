@@ -26,7 +26,7 @@
   containers.podman.podman_container:
     name: portainer-ce
     image: docker.io/portainer/portainer-ce
-    command: "--admin-password \"{{ admin_password | password_hash('bcrypt') }}\" "
+    command: "--admin-password \" {{ admin_password | password_hash('bcrypt') }}\"  "
     ports:
       - "9443:9443"
     privileged: true
