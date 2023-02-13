@@ -26,8 +26,7 @@
 - name: Echo admin password to local file
   ansible.builtin.command:
     cmd: echo -n " {{ admin_password }} " > /tmp/portainer_password
-    args:
-      creates: /tmp/portainer_password
+    creates: /tmp/portainer_password
 
 # Deploy Portainer Pod
 # https://docs.ansible.com/ansible/latest/collections/containers/podman/index.html
