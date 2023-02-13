@@ -21,10 +21,10 @@
     name: portainer/portainer-ce
 
 # Echo admin password to local file so we can pass it to portainer on first start
-# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html#ansible-collections-ansible-builtin-shell-module
 # NOT SAFE FOR PRODUCTION
 - name: Echo admin password to local file
-  ansible.builtin.command:
+  ansible.builtin.shell:
     cmd: echo -n " {{ admin_password }} " > /tmp/portainer_password
     creates: /tmp/portainer_password
 
