@@ -24,7 +24,7 @@
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html
 # NOT SAFE FOR PRODUCTION
 - name: Echo admin password to local file
-  ansible.buildin.command:
+  ansible.builtin.command:
     cmd: echo -n " {{ admin_password }} " > /tmp/portainer_password
     args:
       creates: /tmp/portainer_password
@@ -39,7 +39,8 @@
     ports:
       - "9443:9443"
     privileged: true
-    volume: "/run/podman/podman.sock:/var/run/docker.sock:Z"
-    volume: "/tmp/portainer_password:/tmp/portainer_password"
+    volume:
+       - "/run/podman/podman.sock:/var/run/docker.sock:Z"
+       - "/tmp/portainer_password:/tmp/portainer_password"
     # volume: portainer_data:/data (need to crate portainer_data first)
     state: started
