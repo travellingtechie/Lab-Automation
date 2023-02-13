@@ -1,6 +1,8 @@
 # Lab Automation
 A collection of scripts that I use for Lab Builds
 
+**This is an active work in progress, it is not yet ready for primetime**
+
 ## Prerequisites
 ### Manual Installation
 I currently run everything inside of a python venv (mostly in Pycharm)
