@@ -1,5 +1,5 @@
 ---
-# vars file for podman_install_<template>
+# vars file for podman_install_traefik
 podman_packages:
   - podman
   - podman-docker

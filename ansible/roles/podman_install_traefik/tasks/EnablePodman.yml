@@ -1,0 +1,15 @@
+## Installs Ubuntu Packages necessary for podman (listed in vars/main.yml)
+# https://docs.ansible.com/ansible/2.9/modules/apt_module.html
+- name: Install Ubuntu Packages
+  apt:
+    name: "{{ podman_packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+# Enable systemd socket for Podman
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_module.html
+- name: Enable podman.socket
+  ansible.builtin.systemd:
+    name: podman.socket
+    enabled: true

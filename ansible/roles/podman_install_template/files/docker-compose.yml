@@ -1,0 +1,3 @@
+---
+# Insert docker-compose file used by ComposeContainer.yml
+# I put volumes in         /opt/ansible/podman_<template>

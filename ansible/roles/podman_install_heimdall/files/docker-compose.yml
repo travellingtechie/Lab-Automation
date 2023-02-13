@@ -10,7 +10,7 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - /opt/ansible/podman-heimdall/config:/config
+      - /opt/ansible/podman_heimdall/config:/config
     ports:
       - 8080:80
       - 9080:443
