@@ -1,5 +1,5 @@
 ---
-# tasks file for ubuntu_install_portainer
+# tasks file for podman_install_portainer
 
 ## Installs Ubuntu Packages necessary for portainer packages listed in vars/main.yml
 # https://docs.ansible.com/ansible/2.9/modules/apt_module.html
@@ -41,5 +41,5 @@
     volume:
        - "/run/podman/podman.sock:/var/run/docker.sock:Z"
        - "/tmp/portainer_password:/tmp/portainer_password"
-    # volume: portainer_data:/data (need to crate portainer_data first)
+    # volume: portainer_data:/data (need to create portainer_data first)
     state: started

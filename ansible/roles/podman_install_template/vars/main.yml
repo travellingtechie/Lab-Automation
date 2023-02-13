@@ -1,0 +1,4 @@
+---
+# vars file for podman_install_<template>
+podman_packages:
+  - podman

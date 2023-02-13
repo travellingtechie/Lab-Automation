@@ -1,0 +1,15 @@
+---
+# tasks file for podman_install_<template>
+
+# Installs and enables Podman
+- include_tasks: EnablePodman.yml
+# Insert tasks here that need to occur before deploying the container
+
+# Deploy Container
+- include_tasks: DeployContainer.yml
+
+
+# Insert tasks here that need to occur after deploying the container
+
+
+

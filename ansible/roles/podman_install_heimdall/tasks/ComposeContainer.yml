@@ -1,0 +1,16 @@
+# Deploy container use docker-compose
+# https://www.redhat.com/sysadmin/podman-docker-compose
+# https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
+# https://docs.linuxserver.io/images/docker-heimdall
+
+- name: copy Docker Compose files
+  copy:
+    src: files/docker-compose.yml
+    dest: /opt/ansible/podman_heimdall/
+
+
+# use files parameter to use multiple docker-compose.yml files
+- name: deploy Docker Compose stack
+  community.docker.docker_compose:
+    project_src: /opt/ansible/podman_heimdall/
+    state: present

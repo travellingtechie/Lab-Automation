@@ -1,0 +1,4 @@
+---
+# vars file for podman_install_mariadb
+packages:
+  - podman

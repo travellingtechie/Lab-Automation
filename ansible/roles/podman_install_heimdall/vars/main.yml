@@ -1,0 +1,6 @@
+---
+# vars file for podman_install_heimdall
+podman_packages:
+  - podman
+  - podman-docker
+  - docker-compose

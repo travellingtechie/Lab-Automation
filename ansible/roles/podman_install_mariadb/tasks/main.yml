@@ -1,0 +1,34 @@
+---
+# tasks file for podman_install_mariadb
+## Installs Ubuntu Packages necessary for maria packages (listed in vars/main.yml)
+# https://docs.ansible.com/ansible/2.9/modules/apt_module.html
+- name: Install Ubuntu Packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_module.html
+- name: Enable podman.socket
+  ansible.builtin.systemd:
+    name: podman.socket
+    enabled: true
+
+# Deploy Portainer Pod
+# https://docs.ansible.com/ansible/latest/collections/containers/podman/index.html
+# https://hub.docker.com/_/mariadb/
+- name: Deploy mariadb pod
+  containers.podman.podman_container:
+    name: mariadb
+    image: docker.io/mariadb/latest
+    env: " MYSQL_ROOT_PASSWORD={{ admin_password }}"
+    ports:
+      - "9443:94"
+    privileged: true
+    volume:
+       - "/var/lib/mysql:/var/lib/mysql"
+    state: started
+
+#  NOT FOR PRODUCTION
+#  To make this more secure, I need to create the password using secrets  (see https://hub.docker.com/_/mariadb/)

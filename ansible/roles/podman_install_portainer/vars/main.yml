@@ -1,5 +1,5 @@
 ---
-# vars file for ubuntu_install_portainer
+# vars file for podman_install_portainer
 # Packages to install
 packages:
   - podman

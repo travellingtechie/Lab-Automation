@@ -1,9 +1,0 @@
----
-## Installs Ubuntu Packages
-## packages are listed in group_vars as "group_packages"
-- hosts: controlcenter
-  become: true
-  gather_facts: False
-  vars:
-  roles:
-    - ubuntu_install_portainer

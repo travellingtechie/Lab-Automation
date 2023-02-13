@@ -1,0 +1,16 @@
+# Deploy heimdall Pod
+# https://docs.ansible.com/ansible/latest/collections/containers/podman/index.html
+# Use this file for a standard deployment, use ComposeContainer if you want to use docker-compose
+
+# Use this file
+- name: Deploy heimdall pod
+  containers.podman.podman_container:
+    name: heimdall
+    image: docker.io/heimdall/latest
+    env: " "
+    ports:
+      - "9443:9443"
+    privileged: true
+    volume:
+       - "/tmp/example:/tmp/example"
+    state: started
