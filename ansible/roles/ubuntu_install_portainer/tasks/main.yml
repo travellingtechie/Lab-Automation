@@ -25,7 +25,7 @@
 # NOT SAFE FOR PRODUCTION
 - name: Echo admin password to local file
   ansible.builtin.shell:
-    cmd: echo -n " {{ admin_password }} " > /tmp/portainer_password
+    cmd: echo -n "{{ admin_password }}" > /tmp/portainer_password
     creates: /tmp/portainer_password
 
 # Deploy Portainer Pod
@@ -34,7 +34,7 @@
   containers.podman.podman_container:
     name: portainer-ce
     image: docker.io/portainer/portainer-ce
-    command: "--admin-password-file /root/portainer_admin_password"
+    command: "--admin-password-file /tmp/portainer_password"
     ports:
       - "9443:9443"
     privileged: true
