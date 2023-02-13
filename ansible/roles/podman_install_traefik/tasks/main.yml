@@ -8,7 +8,7 @@
 # Deploy Container
 # Depending on deployment choice, this will be either DeployContainer.yml or ComposeContainer.yml
 # - include_tasks: ComposeContainer.yml
-- include_tasks: DeployContainer.yml
+- include_tasks: ComposeContainer.yml
 
 
 # Insert tasks here that need to occur after deploying the container
