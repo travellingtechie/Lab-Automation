@@ -1,7 +1,7 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Installs the necessary packages, then installs and configures portainer on an Ubuntu host
 
 Requirements
 ------------
@@ -11,7 +11,10 @@ Any pre-requisites that may not be covered by Ansible itself or the role should 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+vars/main.yml
+packages: includes packages necessary for install, currently just podman
+
+password file: a plaintext file with the admin password, no other whitepace or characters.
 
 Dependencies
 ------------
@@ -23,9 +26,12 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+- hosts: controlcenter
+  become: true
+  gather_facts: False
+  vars:
+  roles:
+    - ubuntu_install_portainer
 
 License
 -------
