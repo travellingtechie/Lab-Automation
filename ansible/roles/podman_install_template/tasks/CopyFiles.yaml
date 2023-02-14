@@ -3,9 +3,5 @@
 - name: copy Docker Compose files
   copy:
     src: files/docker-compose.yml
-    dest: /opt/ansible/podman_traefik/
+    dest: /opt/ansible/podman_<template>/
 
-- name: Copy Traefik Configuration
-  copy:
-    src: files/traefik.yaml
-    dest: /opt/ansible/podman_traefik/
