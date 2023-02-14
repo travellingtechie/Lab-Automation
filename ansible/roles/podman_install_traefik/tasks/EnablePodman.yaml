@@ -1,4 +1,4 @@
-## Installs Ubuntu Packages necessary for podman (listed in vars/main.yml)
+## Installs Ubuntu Packages necessary for podman (listed in vars/main.yaml)
 # https://docs.ansible.com/ansible/2.9/modules/apt_module.html
 - name: Install Ubuntu Packages
   apt:

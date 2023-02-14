@@ -1,5 +1,5 @@
 ---
-# Insert docker-compose file used by ComposeContainer.yml
+# Insert docker-compose file used by ComposeContainer.yaml
 version: '3'
 
 services:
@@ -21,10 +21,10 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/ansible/podman_traefik/acme.json:/acme.json
+      - /opt/ansible/podman_traefik/files/acme.json:/acme.json
       - /opt/ansible/podman_traefik/logs:/logs
-      - /opt/ansible/podman_traefik/config.yaml:/config.yaml:ro
-      - /opt/ansible/podman_traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - /opt/ansible/podman_traefik/files/config.yaml:/config.yaml:ro
+      - /opt/ansible/podman_traefik/files/traefik.yaml:/etc/traefik/traefik.yaml:ro
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=http"

@@ -2,14 +2,14 @@
 # tasks file for podman_install_traefik
 
 # Installs and enables Podman
-- include_tasks: EnablePodman.yml
+- include_tasks: EnablePodman.yaml
 # Insert tasks here that need to occur before deploying the container
 
 # Deploy Container
-# Depending on deployment choice, this will be either DeployContainer.yml or ComposeContainer.yml
-# - include_tasks: ComposeContainer.yml
+# Depending on deployment choice, this will be either DeployContainer.yaml or ComposeContainer.yaml
+# - include_tasks: ComposeContainer.yaml
 - include_tasks: CopyFiles.yaml
-- include_tasks: ComposeContainer.yml
+- include_tasks: ComposeContainer.yaml
 
 
 # Insert tasks here that need to occur after deploying the container

@@ -5,8 +5,8 @@
 
 
 # https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
-# use files parameter to use multiple docker-compose.yml files
+# use files parameter to use multiple docker-compose.yaml files
 - name: deploy Docker Compose stack
   community.docker.docker_compose:
-    project_src: /opt/ansible/podman_traefik/
+    project_src: /opt/ansible/podman_traefik/files
     state: present

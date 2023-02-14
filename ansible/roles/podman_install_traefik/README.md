@@ -10,13 +10,13 @@ Requirements
 Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
 Here are the changes that need to be made to use this template for a particular container:
-- Update DeployContainer.yml with information from the command line to deploy the container
-- Add any additional tasks to main.yml that are necessary before or after DeployContainer
+- Update DeployContainer.yaml with information from the command line to deploy the container
+- Add any additional tasks to main.yaml that are necessary before or after DeployContainer
 
 Role Variables
 --------------
 
-vars/main.yml
+vars/main.yaml
 podman_packages: includes packages necessary for install, currently just podman
 
 password file: a plaintext file with the admin password, no other whitepace or characters.
