@@ -1,0 +1,38 @@
+
+# Configuration  for Traefik v2.
+# https://doc.traefik.io/traefik/getting-started/install-traefik/
+
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+entryPoints:
+  web:
+    address: :80
+  websecure:
+    address: :443
+log:
+  level: ERROR
+  filePath: log/traefik.log
+  format: common
+
+accessLog:
+  filePath: /logs/accesslog.txt
+  format: common
+
+# NOT SECURE FOR PRODUCTION
+api:
+  insecure: true
+  dashboard: false
+
+ping:
+  entryPoint: traefik
+
+################################################################
+# Docker configuration backend
+################################################################
+
+providers:
+  docker:
+   endpoint: unix:///var/run/docker.sock
+defaultRule: Host(`{{ normalize .Name }}.lab.travellingtechie.com`)
+    exposedByDefault: true

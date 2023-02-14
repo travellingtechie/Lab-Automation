@@ -1,0 +1,7 @@
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
+# Be sure to edit files/docker-compose.yml for your application
+- name: copy Docker Compose files
+  copy:
+    src: files/docker-compose.yml
+    dest: /opt/ansible/podman_<template>/
+

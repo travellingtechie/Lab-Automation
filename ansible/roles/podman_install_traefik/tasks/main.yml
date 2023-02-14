@@ -8,6 +8,7 @@
 # Deploy Container
 # Depending on deployment choice, this will be either DeployContainer.yml or ComposeContainer.yml
 # - include_tasks: ComposeContainer.yml
+- include_tasks: CopyFiles.yaml
 - include_tasks: ComposeContainer.yml
 
 
