@@ -3,13 +3,6 @@
 # https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
 # https://docs.linuxserver.io/images/
 
-# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
-# Be sure to edit files/docker-compose.yml for your application
-- name: copy Docker Compose files
-  copy:
-    src: files/docker-compose.yml
-    dest: /opt/ansible/podman_<template>/
-
 
 # https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
 - name: deploy Docker Compose stack

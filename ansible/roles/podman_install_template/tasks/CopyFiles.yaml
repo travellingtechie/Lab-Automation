@@ -2,6 +2,6 @@
 # Be sure to edit files/docker-compose.yml for your application
 - name: copy Docker Compose files
   copy:
-    src: files/docker-compose.yml
+    src: files/docker-compose.yaml
     dest: /opt/ansible/podman_<template>/
 

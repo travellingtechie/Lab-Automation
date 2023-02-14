@@ -33,6 +33,6 @@ ping:
 
 providers:
   docker:
-   endpoint: unix:///var/run/docker.sock
-defaultRule: Host(`{{ normalize .Name }}.lab.travellingtechie.com`)
+    endpoint: unix:///var/run/docker.sock
+    defaultRule: Host(`{{ normalize .Name }}.lab.travellingtechie.com`)
     exposedByDefault: true
