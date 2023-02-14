@@ -7,8 +7,6 @@ services:
     # The official v2 Traefik docker image
     image: traefik:latest
     restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
     networks:
       - proxy
     environment: []
