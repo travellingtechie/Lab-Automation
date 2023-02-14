@@ -3,3 +3,5 @@
 # Packages to install
 packages:
   - podman
+  - podman-docker
+  - docker-compose

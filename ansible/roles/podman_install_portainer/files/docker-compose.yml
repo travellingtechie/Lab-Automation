@@ -1,0 +1,15 @@
+---
+# Insert docker-compose file used by ComposeContainer.yml
+# I put volumes in         /opt/ansible/podman_portainer
+version: '3'
+
+services:
+  portainer:
+    image: docker.io/portainer/portainer-ce
+    command: --admin-password-file /opt/ansible/podman_portainer/portainer_password
+    ports:
+      - " {{ podman_port_portainer }}:9443"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /run/podman/podman.sock:/var/run/docker.sock:Z
+      - /tmp/portainer_password:/tmp/portainer_password

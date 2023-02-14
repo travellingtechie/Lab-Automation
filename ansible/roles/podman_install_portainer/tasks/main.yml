@@ -1,45 +1,17 @@
 ---
 # tasks file for podman_install_portainer
 
-## Installs Ubuntu Packages necessary for portainer packages listed in vars/main.yml
-# https://docs.ansible.com/ansible/2.9/modules/apt_module.html
-- name: Install Ubuntu Packages
-  apt:
-    name: "{{ packages }}"
-    state: present
-    update_cache: true
-    cache_valid_time: 3600
+# Installs and enables Podman
+- include_tasks: EnablePodman.yml
 
-# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_module.html
-- name: Enable podman.socket
-  ansible.builtin.systemd:
-    name: podman.socket
-    enabled: true
+# Insert tasks here that need to occur before deploying the container
+- include_tasks: CreatePasswordfile.yml
 
-- name: Pull an image
-  containers.podman.podman_image:
-    name: portainer/portainer-ce
+# Deploy Container
+# Depending on deployment choice, this will be either DeployContainer.yml or ComposeContainer.yml
+# - include_tasks: DeployContainer.yml
+- include_tasks: ComposeContainer.yml
 
-# Echo admin password to local file so we can pass it to portainer on first start
-# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html#ansible-collections-ansible-builtin-shell-module
-# NOT SAFE FOR PRODUCTION
-- name: Echo admin password to local file
-  ansible.builtin.shell:
-    cmd: echo -n "{{ admin_password }}" > /tmp/portainer_password
-    creates: /tmp/portainer_password
+# Insert tasks here that need to occur after deploying the container
 
-# Deploy Portainer Pod
-# https://docs.ansible.com/ansible/latest/collections/containers/podman/index.html
-- name: Deploy Portainer-CE pod
-  containers.podman.podman_container:
-    name: portainer-ce
-    image: docker.io/portainer/portainer-ce
-    command: "--admin-password-file /tmp/portainer_password"
-    ports:
-      - "9443:9443"
-    privileged: true
-    volume:
-       - "/run/podman/podman.sock:/var/run/docker.sock:Z"
-       - "/tmp/portainer_password:/tmp/portainer_password"
-    # volume: portainer_data:/data (need to create portainer_data first)
-    state: started
+

@@ -1,0 +1,18 @@
+# Deploy portainer Pod
+# https://docs.ansible.com/ansible/latest/collections/containers/podman/index.html
+
+# Deploy Portainer Pod
+# https://docs.ansible.com/ansible/latest/collections/containers/podman/index.html
+- name: Deploy Portainer-CE pod
+  containers.podman.podman_container:
+    name: portainer-ce
+    image: docker.io/portainer/portainer-ce
+    command: "--admin-password-file /opt/ansible/podman_portainer/portainer_password"
+    ports:
+      - "9443:9443"
+    privileged: true
+    volume:
+       - "/run/podman/podman.sock:/var/run/docker.sock:Z"
+       - "/tmp/portainer_password:/tmp/portainer_password"
+    # volume: portainer_data:/data (need to create portainer_data first)
+    state: started
