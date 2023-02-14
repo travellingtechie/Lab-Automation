@@ -4,6 +4,7 @@
 # Installs and enables Podman
 - include_tasks: EnablePodman.yaml
 # Insert tasks here that need to occur before deploying the container
+- include_tasks: CreateNetworks.yaml
 
 # Deploy Container
 # Depending on deployment choice, this will be either DeployContainer.yaml or ComposeContainer.yaml

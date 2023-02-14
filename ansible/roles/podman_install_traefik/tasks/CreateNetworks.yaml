@@ -1,0 +1,7 @@
+# Create Networks used by pod
+# https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_network_module.html#ansible-collections-containers-podman-podman-network-module
+
+- name: Create a podman network
+  containers.podman.podman_network:
+    name: proxy
+  become: true
