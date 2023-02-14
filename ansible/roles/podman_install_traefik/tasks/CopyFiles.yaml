@@ -1,12 +1,9 @@
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
 # Be sure to edit files/docker-compose.yml for your application
-- name: copy Docker Compose files
+- name: copy Docker Compose and configuration files
   copy:
-    src: files/docker-compose.yaml
+    src: files
     dest: /opt/ansible/podman_traefik/
 
-- name: Copy Traefik Configuration
-  copy:
-    src: files/traefik.yaml
-    dest: /opt/ansible/podman_traefik/
+
 

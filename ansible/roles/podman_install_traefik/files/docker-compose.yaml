@@ -3,18 +3,33 @@
 version: '3'
 
 services:
-  reverse-proxy:
+  traefik:
     # The official v2 Traefik docker image
-    image: traefik:v2.9
-    # Enables the web UI and tells Traefik to listen to docker
+    image: traefik:latest
     command:
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    environment: []
     ports:
       # The HTTP port
       - "80:80"
       # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
     volumes:
-      # So that Traefik can listen to the Docker events
+      - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/ansible/podman_traefik/acme.json:/acme.json
       - /opt/ansible/podman_traefik/logs:/logs
-      - /opt/ansible/podman_traefik/traefik.yaml:/etc/traefik/traefik.yaml
+      - /opt/ansible/podman_traefik/config.yaml:/config.yaml:ro
+      - /opt/ansible/podman_traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=http"
+      - "traefik.http.routers.traefik.rule=Host(`traefik-dashboard.lab.travellingtechie.com`)"
+
+networks:
+  proxy:
+    external:true
