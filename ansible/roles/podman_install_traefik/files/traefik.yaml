@@ -6,10 +6,13 @@ global:
   checkNewVersion: true
   sendAnonymousUsage: false
 entryPoints:
-  web:
-    address: :80
-  websecure:
-    address: :443
+  http:
+    address: ":80"
+##todo add in redirections so everything goes to 443
+  https:
+    address: ":443"
+serversTransport:
+  insecureSkipVerify: true
 log:
   level: ERROR
   filePath: log/traefik.log
@@ -23,14 +26,8 @@ accessLog:
 api:
   insecure: true
   dashboard: false
-
 ping:
   entryPoint: traefik
-
-################################################################
-# Docker configuration backend
-################################################################
-
 providers:
   docker:
     endpoint: unix:///var/run/docker.sock
