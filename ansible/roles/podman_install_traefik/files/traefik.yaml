@@ -8,16 +8,20 @@ global:
 entryPoints:
   http:
     address: ":80"
+    http:
+      redirections:
+        entrypoint:
+          to: https
+          scheme: https
 ##todo add in redirections so everything goes to 443
   https:
     address: ":443"
 serversTransport:
   insecureSkipVerify: true
 log:
-  level: ERROR
-  filePath: log/traefik.log
+  level: DEBUG
+  filePath: logs/traefik.log
   format: common
-
 accessLog:
   filePath: /logs/accesslog.txt
   format: common
@@ -25,11 +29,12 @@ accessLog:
 # NOT SECURE FOR PRODUCTION
 api:
   insecure: true
-  dashboard: false
+  dashboard: true
 ping:
   entryPoint: traefik
 providers:
   docker:
     endpoint: unix:///var/run/docker.sock
-    defaultRule: Host(`{{ normalize .Name }}.lab.travellingtechie.com`)
-    exposedByDefault: true
+    network: "proxy"
+  file:
+    filename: ""

@@ -6,26 +6,34 @@ services:
   traefik:
     # The official v2 Traefik docker image
     image: traefik:latest
+    container_name: traefik
     restart: unless-stopped
     networks:
       - proxy
     environment: []
     ports:
-      # The HTTP port
       - "80:80"
-      # The Web UI (enabled by --api.insecure=true)
-      - "8080:8080"
+      - "443:443"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/ansible/podman_traefik/files/acme.json:/acme.json
       - /opt/ansible/podman_traefik/logs:/logs
-      - /opt/ansible/podman_traefik/files/config.yaml:/config.yaml:ro
+      - /opt/ansible/podman_traefik/files/config.yaml:/etc/traefik/config.yaml:ro
       - /opt/ansible/podman_traefik/files/traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - /opt/ansible/podman_traefik/certificates:/certificates:ro
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=http"
-      - "traefik.http.routers.traefik.rule=Host(`traefik-dashboard.lab.travellingtechie.com`)"
+      - "traefik.http.routers.traefik.rule=Host(`traefik-db.lab.travellingtechie.com`)"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$$lX5W/.tr$$J.lmEIA6.p702WtTsb04p."
+      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
+      - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
+      - "traefik.http.routers.traefik-secure.entrypoints=https"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik-db.local.example.com`)"
+      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
 
 networks:
   proxy:
