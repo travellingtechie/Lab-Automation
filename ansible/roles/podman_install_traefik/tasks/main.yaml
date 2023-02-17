@@ -10,6 +10,7 @@
 # Depending on deployment choice, this will be either DeployContainer.yaml or ComposeContainer.yaml
 # - include_tasks: ComposeContainer.yaml
 - include_tasks: CopyFiles.yaml
+- include_tasks: CopyTemplates.yaml
 - include_tasks: ComposeContainer.yaml
 
 

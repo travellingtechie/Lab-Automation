@@ -1,0 +1,139 @@
+---
+- name: "[ Block ] - Create virtual machine"
+  block:
+
+    - name: "[ Block Task ] - Create new virtual machine"
+      community.general.proxmox_kvm:
+        agent: "{{ enabled=1 }}"
+        api_host: "{{ proxmox_api_host }}"
+        api_user: "{{ proxmox_api_user }}"
+        api_password: "{{ proxmox_api_pass }}"
+        bios: "{{ bios|default('seabios') }}"
+        ciuser: "{{ cloud_init_user }}"
+        cipassword: "{{ cloud_init_pass }}"
+        cores: "{{ cores|default('1') }}"
+        cpu: "{{ cpu_type|default('host') }}"
+        hotplug: "{{ hotplug|default('network,cpu,memory,disk') }}"
+        ide:
+          ide0: "{{ cloud_init_storage|default('local-lvm:cloudinit,media=cdrom') }}"
+        ipconfig:
+          ipconfig0: "ip={{ ipaddress }},gw={{ gateway }}"
+        memory: "{{ ram|default('2048') }}"
+        name: "{{ proxmox_vm_name|trim }}"
+        net:
+          net0: "virtio,bridge=vmbr0,firewall=1{{ lookup('template','vlan.j2') }}"
+        nameservers: "{{ virtual_machine_nameservers }}"
+        node: "{{ proxmox_node }}"
+        numa_enabled: "{{ numa|default('yes') }}"
+        onboot: "{{ onboot|default('no') }}"
+        ostype: "{{ ostype|default('l26') }}"
+        searchdomains: "{{ domain|default(omit) }}"
+        scsihw: virtio-scsi-pci
+        sshkeys: "{{ cloud_init_public_key }}"
+        tags: "{{ tags|list }}"
+        validate_certs: false
+        virtio:
+          virtio0: "{{ proxmox_storage|default('local-lvm') }}:{{ pmsize|default('2') }}"
+        vcpus: "{{ vcpus|default('1') }}"
+        vmid: "{{ vmid|default(omit) }}"
+      loop: "{{ ansible_play_hosts }}"
+      loop_control:
+        pause: 2
+      register: __proxmox_results
+      delegate_to: localhost
+      when: inventory_hostname == item
+
+    - name: "[ Block Task ] - Import the disk to Proxmox"
+      ansible.builtin.shell: |
+          /usr/sbin/qm set {{ item['vmid'] }} --delete virtio0
+          /usr/sbin/qm set {{ item['vmid'] }} --delete unused0 
+          /usr/sbin/qm importdisk {{ item['vmid'] }} {{ qcow_image_path }}/{{ image_to_use }} {{ proxmox_storage|default('local-lvm') }} 
+          /usr/sbin/qm set {{ item['vmid'] }} --{{ bootdisk|default('scsi0') }} {{ proxmox_storage|default('local-lvm') }}:vm-{{ item['vmid'] }}-disk-0 
+          {% if add_space is defined %}/usr/sbin/qm resize {{ item['vmid'] }} {{ bootdisk|default('scsi0') }} +{{ add_space }}G{% endif %} 
+          {% if disk2 is defined %}/usr/sbin/qm set {{ item['vmid'] }} --scsi1 {{ disk2 }}{% endif %} 
+          {% if disk3 is defined %}/usr/sbin/qm set {{ item['vmid'] }} --scsi2 {{ disk3 }}{% endif %} 
+          {% if disk4 is defined %}/usr/sbin/qm set {{ item['vmid'] }} --scsi3 {{ disk4 }}{% endif %}
+      failed_when: false
+      delegate_to: "{{ proxmox_api_host }}"
+      vars:
+        ansible_ssh_user: "{{ proxmox_admin_ssh_user }}"
+        ansible_ssh_private_key_file: "{{ proxmox_admin_key }}"
+      loop: "{{ __proxmox_results['results'] }}"
+      loop_control:
+        pause: 1
+      register: __shell_output
+      when:
+        - __proxmox_results is changed
+        - inventory_hostname in item['item']
+        - item['vmid']
+
+    - name: "[ Block Task ] - Update virtual machine so it will boot from scsi0"
+      community.general.proxmox_kvm:
+        api_host: "{{ proxmox_api_host }}"
+        api_user: "{{ proxmox_api_user }}"
+        api_password: "{{ proxmox_api_pass }}"
+        boot: cnd
+        bootdisk: "{{ bootdisk|default('scsi0') }}"
+        name: "{{ proxmox_vm_name|trim }}"
+        node: "{{ proxmox_node }}"
+        vmid: "{{ item['vmid'] }}"
+        validate_certs: false
+        update: true
+      delegate_to: localhost
+      register: __update_status
+      loop: "{{ __proxmox_results['results'] }}"
+      when:
+        - __proxmox_results is changed
+        - inventory_hostname in item['item']
+        - item['vmid']
+
+    - name: "[ Block Task ] - Start virtual machine"
+      community.general.proxmox_kvm:
+        api_host: "{{ proxmox_api_host }}"
+        api_user: "{{ proxmox_api_user }}"
+        api_password: "{{ proxmox_api_pass }}"
+        name: "{{ proxmox_vm_name|trim }}"
+        node: "{{ proxmox_node }}"
+        state: started
+      delegate_to: localhost
+      loop: "{{ __proxmox_results['results'] }}"
+      loop_control:
+        pause: 1
+      until: __vm_start_status is succeeded
+      retries: 10
+      register: __vm_start_status
+      when:
+        - __proxmox_results is changed
+        - inventory_hostname in item['item']
+        - item['vmid']
+
+    - name: "[ Block Task ] - Register RHEL Wait 300 seconds for port 22 to become open and contain OpenSSH"
+      ansible.builtin.wait_for:
+        port: 22
+        host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+        search_regex: OpenSSH
+        delay: 20
+      connection: local
+      # when:
+      #   - __vm_start_status is defined and __vm_start_status is changed
+      #   - redhat_user is defined
+      #   - redhat_user|length > 0
+      #   - redhat_pass is defined
+      #   - redhat_pass|length > 0
+      #   - tags is defined
+      #   - "'rhel' in tags"
+      #   - "'autosubscribe' in tags"
+
+
+  rescue:
+
+    - name: "[ Block Rescue Task ] - Delete VM"
+      community.general.proxmox_kvm:
+        api_host: "{{ proxmox_api_host }}"
+        api_user: "{{ proxmox_api_user }}"
+        api_password: "{{ proxmox_api_pass }}"
+        name: "{{ proxmox_vm_name|trim }}"
+        node: "{{ proxmox_node }}"
+        state: absent
+        force: true
+      delegate_to: localhost

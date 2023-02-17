@@ -1,0 +1,47 @@
+---
+#- name: get next id vm
+#  shell:
+#      vmid=$(pvesh get /cluster/nextid);
+#      echo $vmid
+#  register: idnewvm
+
+- name: Clone vm
+  community.general.proxmox_kvm:
+    node: '{{ proxmox_node }}'
+    api_user: '{{ proxmox_api_user }}'
+    api_token_id: '{{ proxmox_api_token_id }}'
+    api_token_secret: '{{ proxmox_api_secret }}'
+    api_host: '{{ proxmox_api_host }}'
+    clone: ubuntu-cloud
+    vmid: "{{ proxmox_ubuntu_cloud_template_id }}"
+    name: '{{ vm_name }}'
+    full: yes
+    storage: '{{proxmox_vm_storage}}'
+    newid: '{{ idnewvm }}'
+    timeout: 600
+
+- name: update ip 0 interface
+  become: yes
+  delegate_to: rama21
+  shell: "/usr/sbin/qm set '{{ idnewvm }}' --ipconfig0 ip='{{ vm_ip }}/{{ vm_mask }}',gw='{{ vm_gw }}'"
+
+- name: Update vm
+  community.general.proxmox_kvm:
+    node: '{{ proxmox_node }}'
+    api_user: '{{ proxmox_api_user }}'
+    api_token_id: '{{ proxmox_api_token_id }}'
+    api_token_secret: '{{ proxmox_api_token_secret }}'
+    api_host: '{{ proxmox_api_host }}'
+    ciuser: '{{ ansible_user }}'
+    cipassword: '{{ ansible_password }}'
+    sshkeys: '{{ ansible_user_key_public }}'
+    searchdomains: '{{ vm_domain_search }}'
+    nameservers:
+      - '{{ underlay_nameserver1 }}'
+      - '{{ underlay_nameserver2 }}'
+    vmid: '{{ idnewvm }}'
+    cores: '{{ vm_cores }}'
+    memory: '{{ vm_memory }}'
+    description: created with ansible
+    onboot: yes
+    update: yes

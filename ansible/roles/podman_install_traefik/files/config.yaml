@@ -1,13 +1,2 @@
 # Traefik dynamic configuration file
 # See https://doc.traefik.io/traefik/getting-started/configuration-overview/#the-dynamic-configuration
-tls:
-  stores:
-    default:
-      defaultCertificate:
-        certFile: /certificates/hostname-cert.pem
-        keyFile: /certificates/hostname-key.pem
-  certificates:
-    - certFile: /certificates/hostname-cert.pem
-      keyFile: /certificates/hostname-cert.pem
-      stores:
-        - default

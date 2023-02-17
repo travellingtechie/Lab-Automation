@@ -1,6 +1,6 @@
 ---
 ## Installs Heimdall using podman
-- hosts: controlcenter
+- hosts: podman
   become: true
   gather_facts: False
   vars:

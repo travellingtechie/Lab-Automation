@@ -1,0 +1,11 @@
+---
+# tasks file for proxmox-deploy-ubuntu-cloudinit
+
+# - include_task: VerifyConfig.yaml
+- include_tasks: CloudinitVM.yaml
+
+#- include_task: PostProvisioning.yaml
+#- include_task: Cleanup.yaml
+
+
+

@@ -1,0 +1,13 @@
+{% if domain is undefined %}
+    {% if 'local.lan' in inventory_hostname %}
+        {{ inventory_hostname }}
+    {% else %}
+        {{ inventory_hostname + '.local.lan' }}
+    {% endif %}
+{% elif domain is defined %}
+   {% if domain in inventory_hostname %}
+       {{ inventory_hostname }}
+   {% else %}
+       {{ inventory_hostname + '.' + domain }}
+   {% endif %}
+{%- endif -%}

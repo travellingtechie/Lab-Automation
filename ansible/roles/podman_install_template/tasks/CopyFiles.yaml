@@ -4,4 +4,5 @@
   copy:
     src: files/docker-compose.yaml
     dest: /opt/ansible/podman_<template>/
+    mode: 0600
 

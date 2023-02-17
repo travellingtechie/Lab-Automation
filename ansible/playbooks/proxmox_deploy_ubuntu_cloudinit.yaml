@@ -1,0 +1,8 @@
+---
+# Deploy Ubuntu VM on Proxmox using Cloud-init
+- hosts: proxmox
+  become: true
+  gather_facts: False
+  vars:
+  roles:
+    - proxmox_deploy_ubuntu_cloudinit

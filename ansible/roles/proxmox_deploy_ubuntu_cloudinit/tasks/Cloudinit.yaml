@@ -1,0 +1,27 @@
+- name: Clone VM with source vmid and target newid and raw format
+  community.general.proxmox_kvm:
+    api_user: "{{ proxmox_api_user }}"
+    api_token_id: "{{ proxmox_api_token_id }}"
+    api_token_secret: "{{ proxmox_api_secret }}"
+    api_host: "{{ proxmox_api_host }}"
+    node: "{{ proxmox_node }}"
+    clone: ubuntu-cloud
+    vmid: "{{ proxmox_ubuntu_cloud_template_id }}"
+# This is a cheat until I learn how to get the vmid and pass it on
+    newid: 300
+    name: "{{ vm_name }}"
+    storage: "{{ proxmox_vm_storage }}"
+    format: qcow2
+    timeout: 300
+# For Cloud Init
+#    ide:
+#      ide2: 'local:cloudinit,format=qcow2'
+#    ciuser: "{{ ansible_user }}"
+#    cipassword: "{{ ansible_password }}"
+#    sshkeys: "{{ansible_user_key_public }}"
+#    searchdomains: "{{ lab_domain }}"
+#    nameservers:  "{{ underlay_nameservers }}"
+#    net:
+#      net0: "virtio,{{ proxmox_network }},tag={{ vm_vlan }}"
+#    ipconfig:
+#      ipconfig0: "ip={{ vm_ip_cidr }},gw={{ vm_gw }}"

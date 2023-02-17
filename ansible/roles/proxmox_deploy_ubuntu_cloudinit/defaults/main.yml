@@ -1,0 +1,14 @@
+---
+# defaults file for proxmox-deploy-ubuntu-cloudinit
+
+qcow_image_path: /opt/qcow_images/images
+
+qcow_images:
+
+  - name: ubuntu18
+    qcow_file: bionic-server-cloudimg-amd64.qcow2
+
+  - name: ubuntu20
+    qcow_file: focal-server-cloudimg-amd64.qcow2
+
+

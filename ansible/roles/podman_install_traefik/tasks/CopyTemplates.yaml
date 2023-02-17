@@ -1,0 +1,8 @@
+# Copy templated file to destination system
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html#ansible-collections-ansible-builtin-template-module
+
+- name: Copy docker-compose
+  copy:
+    src: templates/docker-compose.j2
+    dest: /opt/ansible/podman_traefik/docker-compose.yaml
+    mode: 0600

@@ -1,0 +1,13 @@
+---
+- hosts: proxmox
+  vars:
+    vm_name: "luna2"
+    vm_ip: "10.1.60.21"
+    vm_mask: "24"
+    vm_gw: "10.1.60.1"
+    vm_vlan: "0"
+    idnewvm: 106
+    vm_cores: 2
+    vm_memory: 2048
+  roles:
+    - proxmox_deploy_ubuntu_cloudinit

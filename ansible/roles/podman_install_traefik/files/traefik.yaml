@@ -1,23 +1,26 @@
 
 # Configuration  for Traefik v2.
 # https://doc.traefik.io/traefik/getting-started/install-traefik/
-
 global:
   checkNewVersion: true
   sendAnonymousUsage: false
+
+api:
+  dashboard: true
+  debug: true
 entryPoints:
   http:
     address: ":80"
     http:
       redirections:
-        entrypoint:
+        entryPoint:
           to: https
           scheme: https
-##todo add in redirections so everything goes to 443
   https:
     address: ":443"
 serversTransport:
   insecureSkipVerify: true
+
 log:
   level: DEBUG
   filePath: logs/traefik.log
@@ -26,15 +29,35 @@ accessLog:
   filePath: /logs/accesslog.txt
   format: common
 
-# NOT SECURE FOR PRODUCTION
-api:
-  insecure: true
-  dashboard: true
-ping:
-  entryPoint: traefik
 providers:
   docker:
-    endpoint: unix:///var/run/docker.sock
-    network: "proxy"
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
   file:
-    filename: ""
+    filename: /config.yaml
+certificatesResolvers:
+  namecheap:
+    acme:
+      email: brandon@travellingtechie.com
+      storage: acme.json
+      dnsChallenge:
+        provider: namecheap
+        #disablePropagationCheck: true # uncomment this if you have issues pulling certificates through cloudflare, By setting this flag to true disables the need to wait for the propagation of the TXT record to all authoritative name servers.
+        resolvers:
+          - "1.1.1.1:53"
+          - "1.0.0.1:53"
+
+
+#
+## NOT SECURE FOR PRODUCTION
+#api:
+#  insecure: true
+#  dashboard: true
+#ping:
+#  entryPoint: traefik
+#providers:
+#  docker:
+#    endpoint: unix:///var/run/docker.sock
+#    network: "proxy"
+#  file:
+#    filename: ""

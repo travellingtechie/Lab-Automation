@@ -1,0 +1,36 @@
+---
+
+- name: Cleanup when needed
+  block:
+
+    - name: "[ Block Rescue Task ] - Unsubscribe from Red Hat subscriptions"
+      community.general.redhat_subscription:
+        state: absent
+        username: "{{ redhat_user }}"
+        password: "{{ redhat_pass }}"
+      vars:
+        ansible_ssh_user: "{{ cloud_init_user }}"
+        ansible_ssh_private_key_file: "{{ cloud_init_private_key_file }}"
+      become: true
+      failed_when: false
+      when:
+        - clean is defined
+        - redhat_pass is defined
+        - redhat_user is defined
+
+    - name: "[ Block Rescue Task ] - Delete VM"
+      community.general.proxmox_kvm:
+        api_host: "{{ proxmox_api_host }}"
+        api_user: "{{ proxmox_api_user }}"
+        api_password: "{{ proxmox_api_pass }}"
+        name: "{{ proxmox_vm_name|trim }}"
+        node: "{{ proxmox_node }}"
+        state: absent
+        force: true
+      delegate_to: localhost
+      loop: "{{ ansible_play_hosts }}"
+      when: inventory_hostname in item
+      failed_when: false
+
+  tags:
+    - never

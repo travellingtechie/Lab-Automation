@@ -1,0 +1,42 @@
+---
+
+- name: Set virtual machine name to use
+  ansible.builtin.set_fact:
+    proxmox_vm_name: "{{ lookup('template','proxmox_vm_name.j2') }}"
+  tags:
+    - always
+
+- name: Assert ipaddress and gateway vars are actual IP addresses
+  ansible.builtin.assert:
+    that:
+      - ansible_host|ansible.utils.ipaddr('address')
+      - ipaddress|ansible.utils.ipaddr('address')
+      - gateway|ansible.utils.ipaddr('address')
+
+- name: Assert a tag exists that matches an available qcow image
+  ansible.builtin.assert:
+    that:
+      - tags is defined
+      - tags|intersect(qcow_images|map(attribute='name'))
+
+- name: Set image to use
+  ansible.builtin.set_fact:
+    image_to_use: "{{ item['qcow_file'] }}"
+  loop: "{{ qcow_images }}"
+  when:
+    - item['name'] in tags
+
+- name: Verify qcow images path
+  ansible.builtin.stat:
+    path: "{{ qcow_image_path }}/{{ image_to_use }}"
+  register: __qcow_check
+  vars:
+    ansible_ssh_user: "{{ proxmox_admin_ssh_user }}"
+    ansible_ssh_private_key_file: "{{ proxmox_admin_key }}"
+  delegate_to: "{{ proxmox_node }}"
+
+- name: Assert that qcow files exist on proxmox server
+  ansible.builtin.assert:
+    that:
+      - __qcow_check['stat']['exists']
+    fail_msg: "A defined qcow image is missing"

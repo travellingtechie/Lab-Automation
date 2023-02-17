@@ -1,0 +1,53 @@
+---
+
+- name: Post provision basic tasks
+  block:
+
+    - name: Grab facts
+      ansible.builtin.setup:
+        gather_subset: all
+
+    - name: Install baseline packages
+      ansible.builtin.package:
+        name: "{{ 'firewalld' if 'rhel7' in tags else 'firewalld,glibc-langpack-en' }}"
+        state: present
+      notify:
+        - firewalld gt rhel7
+        - firewalld eq rhel7
+
+#    - name: Fix grub timeout
+#      ansible.builtin.lineinfile:
+#        path: /etc/default/grub
+#        regexp: '^GRUB_TIMEOUT='
+#        line: 'GRUB_TIMEOUT=8'
+#      register: __grub_results
+
+#    - name: Remove console params for proxmox
+#      ansible.builtin.shell: |
+#        grub2-mkconfig -o /boot/grub2/grub.cfg
+#        grubby --update-kernel=ALL --remove-args='console=tty0 console=ttyS0,115200n8'
+#      when:
+#        - __grub_results is changed
+#      vars:
+#        ansible_ssh_user: "{{ cloud_init_user }}"
+#        ansible_ssh_private_key_file: "{{ cloud_init_private_key_file }}"
+
+  rescue:
+
+    - name: "[ Block Rescue Task ] - Delete VM"
+      community.general.proxmox_kvm:
+        api_host: "{{ proxmox_api_host }}"
+        api_user: "{{ proxmox_api_user }}"
+        api_password: "{{ proxmox_api_pass }}"
+        name: "{{ proxmox_vm_name|trim }}"
+        node: "{{ proxmox_node }}"
+        state: absent
+        force: true
+      delegate_to: localhost
+
+#  become: true
+#  when:
+#    - tags is defined
+#    - "'rhel' in tags"
+#    - "'autosubscribe' in tags"
+#    - "'buildtest' not in tags"
